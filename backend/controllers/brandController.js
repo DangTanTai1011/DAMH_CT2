@@ -35,7 +35,6 @@ exports.updateBrand = async (req, res) => {
     res.json(brand);
 };
 
-// Xóa thương hiệu - Chỉ admin
 exports.deleteBrand = async (req, res) => {
     if (req.user.role !== "admin") {
         return res.status(403).json({ message: "Forbidden: Only admin can delete brands" });

@@ -131,7 +131,6 @@ exports.deleteOrder = async (req, res) => {
     const { orderId } = req.params;
 
     try {
-        // Tìm và xóa đơn hàng
         const order = await Order.findByIdAndDelete(orderId);
         if (!order) {
             return res.status(404).json({ message: "Không tìm thấy đơn hàng" });

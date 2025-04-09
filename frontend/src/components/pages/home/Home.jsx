@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'; 
 import {
     getProducts,
     getBrands,
@@ -32,7 +33,7 @@ const Home = () => {
         fetchInitialData();
     }, []);
 
-    const addToCart = (product) => {
+    const addToCart = async (product) => {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
 
@@ -42,18 +43,22 @@ const Home = () => {
             return;
         }
 
-        const cartKey = `cart_${userId}`;
-        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-        const existingIndex = cart.findIndex(item => item._id === product._id);
+        const cartData = {
+            userId: userId,
+            productId: product._id,
+            quantity: 1
+        };
 
-        if (existingIndex !== -1) {
-            cart[existingIndex].quantity += 1;
-        } else {
-            cart.push({ ...product, quantity: 1 });
+        try {
+            const response = await axios.post('http://localhost:5000/api/cart', cartData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            alert("🛒 Sản phẩm đã được thêm vào giỏ hàng!");
+        } catch (error) {
+            alert("❌ Lỗi khi thêm sản phẩm vào giỏ hàng: " + error.message);
         }
-
-        localStorage.setItem(cartKey, JSON.stringify(cart));
-        alert("🛒 Sản phẩm đã được thêm vào giỏ hàng!");
     };
 
     const handleSearch = () => {

@@ -180,7 +180,6 @@ exports.getBrands = async (req, res) => {
     }
 };
 
-// 🟢 Lấy danh mục sản phẩm
 exports.getCategories = async (req, res) => {
     try {
         const categories = await Category.find();

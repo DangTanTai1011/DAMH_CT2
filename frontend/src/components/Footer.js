@@ -20,13 +20,13 @@ const Footer = () => {
           marginBottom: "10px",
         }}
       >
-        <p style={{ margin: 0 }}>© {new Date().getFullYear()} My E-Commerce Website</p>
+        <p style={{ margin: 0 }}>© {new Date().getFullYear()} Website Bán Giày</p>
         <p style={{ margin: 0 }}>
-          Made with <span role="img" aria-label="love">❤️</span> by Your Name
+          Được tạo bởi <span role="img" aria-label="love">❤️</span> nhóm DouCode
         </p>
       </div>
       <div style={{ marginTop: "10px", fontSize: "14px" }}>
-        <p style={{ margin: 0 }}>All rights reserved.</p>
+        <p style={{ margin: 0 }}>Mọi quyền được bảo lưu.</p>
       </div>
     </footer>
   );
