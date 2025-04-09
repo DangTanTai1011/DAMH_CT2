@@ -9,15 +9,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage }).single("image");
 
-exports.getProducts = async (req, res) => {
-    try {
-        const products = await Product.find().populate("brand category");
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ message: "Lỗi lấy danh sách sản phẩm", error });
-    }
-};
-
 exports.getProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id).populate("brand category");
@@ -168,23 +159,5 @@ exports.getProducts = async (req, res) => {
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: "Lỗi lấy danh sách sản phẩm", error });
-    }
-};
-
-exports.getBrands = async (req, res) => {
-    try {
-        const brands = await Brand.find(); 
-        res.json(brands); 
-    } catch (error) {
-        res.status(500).json({ message: "Lỗi khi lấy danh sách thương hiệu", error });
-    }
-};
-
-exports.getCategories = async (req, res) => {
-    try {
-        const categories = await Category.find();
-        res.json(categories);
-    } catch (error) {
-        res.status(500).json({ message: "Lỗi khi lấy danh mục sản phẩm", error });
     }
 };
