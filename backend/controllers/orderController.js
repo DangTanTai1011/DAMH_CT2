@@ -98,6 +98,9 @@ exports.getUserOrders = async (req, res) => {
 };
 
 exports.getAllOrders = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     try {
         const orders = await Order.find().populate("userId", "username email").populate("items.productId", "name price");
         res.json(orders);
@@ -107,6 +110,9 @@ exports.getAllOrders = async (req, res) => {
 };
 
 exports.updateOrderStatus = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     const { orderId, status } = req.body;
 
     try {
@@ -128,6 +134,9 @@ exports.updateOrderStatus = async (req, res) => {
 
 
 exports.deleteOrder = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     const { orderId } = req.params;
 
     try {

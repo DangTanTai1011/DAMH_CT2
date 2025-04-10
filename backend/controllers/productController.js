@@ -20,6 +20,9 @@ exports.getProductById = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được thêm sản phẩm" });
+    }
     upload(req, res, async (err) => {
         if (err) return res.status(500).json({ message: "Lỗi upload file", error: err.message });
 
@@ -60,6 +63,9 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được thêm sản phẩm" });
+    }
     upload(req, res, async (err) => {
         if (err) return res.status(500).json({ message: "Lỗi upload file", error: err.message });
 
@@ -96,6 +102,9 @@ exports.updateProduct = async (req, res) => {
 };
 
 exports.deleteProduct = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được thêm sản phẩm" });
+    }
     try {
         await Product.findByIdAndDelete(req.params.id);
         res.json({ message: "Sản phẩm đã bị xóa" });

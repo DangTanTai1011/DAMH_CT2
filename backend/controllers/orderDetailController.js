@@ -1,6 +1,9 @@
 const OrderDetail = require("../models/OrderDetail");
 
 exports.getOrderDetails = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được thêm sản phẩm" });
+    }
     try {
         const orderDetails = await OrderDetail.find().populate("orderId", "totalPrice status");
         
@@ -11,6 +14,9 @@ exports.getOrderDetails = async (req, res) => {
 };
 
 exports.updateOrderDetail = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được thêm sản phẩm" });
+    }
     try {
         const { orderDetailId } = req.params;
         const { fullName, email, phone, address, note } = req.body;
@@ -32,6 +38,9 @@ exports.updateOrderDetail = async (req, res) => {
 };
 
 exports.deleteOrderDetail = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được thêm sản phẩm" });
+    }
     try {
         const { orderDetailId } = req.params;
         const orderDetail = await OrderDetail.findByIdAndDelete(orderDetailId);

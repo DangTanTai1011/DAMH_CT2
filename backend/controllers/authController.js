@@ -39,6 +39,9 @@ exports.logout = (req, res) => {
 };
 
 exports.getAllUsers = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     try {
         const users = await User.find().select("-password");
         res.json(users);
@@ -48,6 +51,9 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     try {
         const { id } = req.params;
         const user = await User.findByIdAndDelete(id);
@@ -60,6 +66,9 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     try {
         const { id } = req.params;
         const { username, email, password, role } = req.body;

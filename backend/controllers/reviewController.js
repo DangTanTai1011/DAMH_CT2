@@ -31,6 +31,9 @@ exports.getReviewsByProduct = async (req, res) => {
 };
 
 exports.getAllReviews = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     try {
         const reviews = await Review.find().populate("user", "username email").populate("product", "name");
         res.json(reviews);
@@ -40,6 +43,9 @@ exports.getAllReviews = async (req, res) => {
 };
 
 exports.deleteReview = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     try {
         const { reviewId } = req.params;
 
@@ -57,6 +63,9 @@ exports.deleteReview = async (req, res) => {
 };
 
 exports.updateReview = async (req, res) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "❌ Chỉ admin mới được truy cập" });
+    }
     try {
         const { reviewId } = req.params;
         const { rating, comment } = req.body;
